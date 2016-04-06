@@ -25,8 +25,10 @@ module.exports = function (req, res, torrent, file) {
   }
 
   function remux() {
+    var wmimage='./logo.png';
     res.type('video/webm');
     var command = ffmpeg(file.createReadStream())
+      .addOption('-vf', 'movie='+wmimage+ ' [watermark]; [in] [watermark] overlay=0:0 [out]')
       .videoCodec('libvpx').audioCodec('libvorbis').format('webm')
       .audioBitrate(128)
       .videoBitrate(1024)
